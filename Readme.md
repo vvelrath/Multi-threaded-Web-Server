@@ -1,4 +1,4 @@
-The objective of this project is to implement a multi-threaded web server “myhttpd” in C/C++ on a UNIX-based platform.
+The objective of this project is to implement a multi-threaded web server "myhttpd" in C/C++ on a UNIX-based platform.
 
 To run this program use the following syntax:
   
@@ -56,14 +56,14 @@ Example:
 
 The server will consist of 2+n threads. A pool of n threads will be always ready for executing/serving incoming requests (n x execution threads). The number n is given as a parameter when you start the server (using option: -n threadnum). One thread will be responsible for listening to incoming HTTP requests and inserting them in a ready queue (1 x queuing thread). Another thread will be responsible for choosing a request from the ready queue and scheduling it to one of the execution threads (1 x scheduling thread).
 
-### QUEUING
+### QUEUING:
 
 The queuing thread will be continuously listening to the port p for incoming http requests. As soon as a new http request comes to the myhttpd server, it will be inserted into the ready queue. For the first t seconds after the server is started, there will be no execution and all requests will wait in the ready queue.
 
-### SCHEDULING
+### SCHEDULING:
 
 The scheduling policy to be used will be set via the [–s sched] option when myhttpd server is first started. The available policies are First Come First Serve (FCFS) and Shortest Job First (SJF). When SJF scheduling policy is selected, you can use the file size information as the job length for scheduling purposes, assuming serving larger files will take longer. The scheduler thread will choose one of the requests in the ready queue according to the scheduling policy selected. The request will then be assigned to one of the available execution threads for service. There will be no scheduling done during the first t seconds after the myhttpd server is started. This time period will be used to accumulate some requests in the ready queue.
 
-### SYNCHNRONIZATION
+### SYNCHNRONIZATION:
 
 To make sure that we protect the ready queue and other shared data structures across multiple threads to prevent race conditions. Mutex locks have been implemented for the same.
