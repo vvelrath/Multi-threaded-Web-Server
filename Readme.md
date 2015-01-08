@@ -4,7 +4,7 @@ To run this program use the following syntax:
   
 	myhttpd [−d] [−h] [−l file] [−p port] [−r dir] [−t time] [−n threadnum] [−s sched]
 
-### DESCRIPTION:
+### DESCRIPTION
 
 myhttpd is a simple web server. It binds to a given port on the given address and waits for incoming HTTP/1.0 requests. It serves content from the given directory. That is,any requests for documents is resolved relative to this directory (the document root – by default,the directory where the server is running).
 OPTIONS:
@@ -18,7 +18,7 @@ OPTIONS:
     −n threadnum : Set number of threads waiting ready in the execution thread pool to threadnum. The default should is 4 execution threads.
     −s sched : Set the scheduling policy. It can be either FCFS or SJF. The default will be FCFS.
 
-### PROTOCOL:
+### PROTOCOL
 
 myhttpd speaks a simplified version of HTTP/1.0: it responds to GET and HEAD requests according to RFC1945. When a connection is made, myhttpd will respond with the appropriate HTTP/1.0 status code and the following headers:
 
@@ -52,18 +52,18 @@ Example:
 
 127.0.0.1 - [19/Sep/2011:13:55:36 -0600] [19/Sep/2011:13:58:21 -0600] "GET /index.html HTTP/1.0" 200 326
 
-### MULTITHREADING:
+### MULTITHREADING
 
 The server will consist of 2+n threads. A pool of n threads will be always ready for executing/serving incoming requests (n x execution threads). The number n is given as a parameter when you start the server (using option: -n threadnum). One thread will be responsible for listening to incoming HTTP requests and inserting them in a ready queue (1 x queuing thread). Another thread will be responsible for choosing a request from the ready queue and scheduling it to one of the execution threads (1 x scheduling thread).
 
-### QUEUING:
+### QUEUING
 
 The queuing thread will be continuously listening to the port p for incoming http requests. As soon as a new http request comes to the myhttpd server, it will be inserted into the ready queue. For the first t seconds after the server is started, there will be no execution and all requests will wait in the ready queue.
 
-### SCHEDULING:
+### SCHEDULING
 
 The scheduling policy to be used will be set via the [–s sched] option when myhttpd server is first started. The available policies are First Come First Serve (FCFS) and Shortest Job First (SJF). When SJF scheduling policy is selected, you can use the file size information as the job length for scheduling purposes, assuming serving larger files will take longer. The scheduler thread will choose one of the requests in the ready queue according to the scheduling policy selected. The request will then be assigned to one of the available execution threads for service. There will be no scheduling done during the first t seconds after the myhttpd server is started. This time period will be used to accumulate some requests in the ready queue.
 
-### SYNCHNRONIZATION:
+### SYNCHNRONIZATION
 
 To make sure that we protect the ready queue and other shared data structures across multiple threads to prevent race conditions. Mutex locks have been implemented for the same.
