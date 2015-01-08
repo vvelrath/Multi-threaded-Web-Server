@@ -1,8 +1,8 @@
-The objective of this project is to implement a multithreaded web server “myhttpd” in C/C++ on a UNIX-based platform.
+The objective of this project is to implement a multi-threaded web server “myhttpd” in C/C++ on a UNIX-based platform.
 
-To run this program:
+To run this program use the following syntax:
   
-### myhttpd [−d] [−h] [−l file] [−p port] [−r dir] [−t time] [−n threadnum] [−s sched]
+	myhttpd [−d] [−h] [−l file] [−p port] [−r dir] [−t time] [−n threadnum] [−s sched]
 
 ### DESCRIPTION:
 
@@ -22,9 +22,9 @@ OPTIONS:
 
 myhttpd speaks a simplified version of HTTP/1.0: it responds to GET and HEAD requests according to RFC1945. When a connection is made, myhttpd will respond with the appropriate HTTP/1.0 status code and the following headers:
 
-    Date : The current timestamp in GMT.
+    Date : The current time-stamp in GMT.
     Server : A string identifying this server and version.
-    Last-Modified : The timestamp in GMT of the file’s last modification date.
+    Last-Modified : The time-stamp in GMT of the file’s last modification date.
     Content-Type : text/html or image/gif
     Content-Length : The size in bytes of the data returned.
 
@@ -32,12 +32,12 @@ If the request type was a GET, then it will subsequently return the data of the 
 
 If the request was for a directory and the directory does not contain a file named "index.html", then myhttpd will generate a directory index, listing the contents of the directory in alphanumeric order. Files starting with a "." are ignored.
 
-If the request begins with a ‘~’, then the following string up to the first slash is translated into that user’s myhttpd directory (ie / home//myhttpd/).
+If the request begins with a '~' then the following string up to the first slash is translated into that user’s myhttpd directory (i.e. / home//myhttpd/).
 LOGGING:
 
 By default, myhttpd does not do any logging. If explicitly enabled via the −l flag, myhttpd will log every request in a slight variation of Apache’s so-called "common" format:
 
-    ’%a %t %t %r %>s %b’
+    '%a %t %t %r %>s %b'
 
 all in a single line per request. That is, it will log:
 
@@ -62,7 +62,7 @@ The queuing thread will be continuously listening to the port p for incoming htt
 
 ### SCHEDULING
 
-The scheduling policy to be used will be set via the [–s sched] option when myhttpd server is first started. The available policies are First Come First Serve (FCFS) and Shortest Job First (SJF). When SJF scheduling policy is selected, you can use the file size information as the job length for scheduling purposes, assuming serving larger files will take longer. The schedulerthread will choose one of the requests in the ready queue according to the scheduling policyselected. The request will then be assigned to one of the available execution threads for service. There will be no scheduling done during the first t seconds after the myhttpd server is started. This time period will be used to accumulate some requests in the ready queue.
+The scheduling policy to be used will be set via the [–s sched] option when myhttpd server is first started. The available policies are First Come First Serve (FCFS) and Shortest Job First (SJF). When SJF scheduling policy is selected, you can use the file size information as the job length for scheduling purposes, assuming serving larger files will take longer. The scheduler thread will choose one of the requests in the ready queue according to the scheduling policy selected. The request will then be assigned to one of the available execution threads for service. There will be no scheduling done during the first t seconds after the myhttpd server is started. This time period will be used to accumulate some requests in the ready queue.
 
 ### SYNCHNRONIZATION
 
